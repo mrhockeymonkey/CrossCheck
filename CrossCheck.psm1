@@ -1,3 +1,15 @@
+#Load Providers
+Try {
+	Get-ChildItem $PSScriptRoot\Providers | ForEach-Object {
+		$ProviderName = $_.Name
+		Write-Debug "Loading Provider: $ProviderName"
+		. $_.FullName
+	}
+}
+Catch {
+	Write-Warning "Could not load $($ProviderName): $($_.Exception.Message)"
+	Continue
+}
 
 #Load Functions
 Try {
@@ -8,6 +20,6 @@ Try {
 	}
 }
 Catch {
-	Write-Warning ("Could not load $($FunctionName): $($_.Exception.Message)")
+	Write-Warning "Could not load $($FunctionName): $($_.Exception.Message)"
 	Continue
 }

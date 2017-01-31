@@ -16,3 +16,19 @@ discrepancies when working with multiple tools, databases, etc
 * making it all look very pretty
 * maybe a snooze button for checks?
 
+Sources JSON
+```json
+{
+	"XCProvider" : [
+		{
+			"Name" : "",
+			
+
+		},
+		{
+			"Name" : "",
+
+		}
+	]
+}
+```
