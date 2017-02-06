@@ -1,24 +1,30 @@
 [
 	{
-		"Provider" : "CliXmlProvider",
-		"Name" : "Process1",
-		"Source" : "C:/Temp/Process.xml"
+		"Provider": "CliXmlProvider",
+		"Config": [
+			{
+				"Name": "Process1",
+				"Source": "C:/Temp/Process.xml"
+			},
+			{
+				"Name": "Process2",
+				"Source": "C:/Temp/Process.xml"
+			}
+		]
 	},
 	{
-		"Provider" : "CliXmlProvider",
-		"Name" : "Process2",
-		"Source" : "C:/Temp/Process.xml"
-	},
-	{
-		"Provider" : "CsvProvider",
-		"Name" : "Service1",
-		"Source" : "C:/Temp/Service.csv",
-		"Special": "1234"
-	},
-	{
-		"Provider" : "CsvProvider",
-		"Name" : "Service2",
-		"Source" : "C:/Temp/Service.csv",
-		"Special" : "122334"
+		"Provider": "CsvProvider",
+		"Config": [
+			{
+				"Name": "Service1",
+				"Source": "C:/Temp/Service.csv",
+				"Special": "1234"
+			},
+			{
+				"Name": "Service2",
+				"Source": "C:/Temp/Service.csv",
+				"Special": "122334"
+			}
+		]
 	}
 ]
