@@ -1,3 +1,10 @@
+#define Enums
+enum Priority {
+	High
+	Medium
+	Low
+}
+
 #Load Providers
 Try {
 	Get-ChildItem $PSScriptRoot\Providers | ForEach-Object {
@@ -23,3 +30,6 @@ Catch {
 	Write-Warning "Could not load $($FunctionName): $($_.Exception.Message)"
 	Continue
 }
+
+#Add alias for check
+New-Alias -Name Check -Value Invoke-Check

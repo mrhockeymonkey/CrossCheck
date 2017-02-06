@@ -8,15 +8,16 @@ This is aimed at making systems administrators aware of administrative and confi
 discrepancies when working with multiple tools, databases, etc
 
 
-## Roadmap
+## Upcoming
 * A python webserver 
 * json files to define data sources
 * json files to define checks
 * exporting check results to htm files
 * making it all look very pretty
 * maybe a snooze button for checks?
+* Documentation on writing providers
 
-Sources JSON
+## How to Define Sources
 ```json
 {
 	"XCProvider" : [
@@ -32,3 +33,17 @@ Sources JSON
 	]
 }
 ```
+
+## How to Define Checks
+```json
+
+```
+
+## How Check are processed?
+
+* Data should be imported from each source on a schedule, few times or once a day
+* Retreived data should be cached to disk when not in use by a check (clixml? whats the most performant)
+* Eachg check that runs should get the data sources it needs in definition from disk to memory and then query
+* This way only data that is needed is in memory for the amount of time it takes to complete the check
+* Checks are invokable PS1 files that take 
+* Multithreading
