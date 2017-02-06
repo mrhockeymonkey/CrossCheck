@@ -1,10 +1,3 @@
-#define Enums
-enum Priority {
-	High
-	Medium
-	Low
-}
-
 #Load Providers
 Try {
 	Get-ChildItem $PSScriptRoot\Providers | ForEach-Object {

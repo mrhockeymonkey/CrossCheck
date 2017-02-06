@@ -1,12 +1,4 @@
 <#
-	.DESCRIPTION
-	The base class for all data providers. 
-	All plugin providers should inherit this class and override methods appropriatly
-#>
-
-
-
-<#
 	.SYNOPSIS
 	Abstract Class: Provider
 
@@ -40,44 +32,5 @@ class Provider {
 	[PSObject]GetCachedData() {
 		$CachedData = Import-Clixml -Path "$PSScriptRoot\Cache\$($this.Name).xml"
 		return $CachedData
-	}
-}
-
-
-<#
-
-#>
-class Source {
-	[String]$Name
-	[String]$Provider
-}
-
-class Check {
-	[String]$CheckName
-	[String[]]$ProviderList
-	[ScriptBlock]$Script
-
-	Check([String]$CheckName, [String[]]$ProviderName,[ScriptBlock]$Script) {
-		$this.CheckName = $CheckName
-		$this.ProviderList = $ProviderName
-		$this.Script = $Script
-	}
-
-	[Issue[]]Invoke() {
-		Write-Verbose "hahahh"
-		return $this.Script.Invoke() 
-		
-	}
-}
-
-class Issue {
-	[String]$Title
-	[Priority]$Priority
-	[String]$Message
-	#[PSObject[]]$Detail
-
-	Issue([String]$Title, [Priority]$Priority) {
-		$this.Title = $Title
-		$this.Priority = $Priority
 	}
 }

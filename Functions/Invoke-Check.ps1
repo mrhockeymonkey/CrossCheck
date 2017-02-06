@@ -8,7 +8,7 @@ Function Invoke-Check {
 		[Parameter(Mandatory = $true, Position = 0)]
 		[String]$Name,
 
-		[Parameter(Mandatory = $true, POsition = 1)]
+		[Parameter(Mandatory = $true, Position = 1)]
 		[ScriptBlock]$Script
 	)
 

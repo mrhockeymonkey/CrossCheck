@@ -10,6 +10,8 @@
 	Write-Issue -Title 'Missing Important Data' -Priority High
 #>
 
+Using module ..\Issue.psm1
+
 Function Write-Issue {
 	[CmdletBinding()]
 	Param(

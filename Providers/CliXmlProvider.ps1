@@ -1,8 +1,10 @@
+<#
+	.DESCRIPTION
+	
+#>
+
 using module ..\Provider.psm1
 
-<#
-
-#>
 class CliXmlProvider : Provider {
 	[String]$Source
 	CliXmlProvider([String]$Name, [String]$Source) : base ('CliXmlProvider') {
