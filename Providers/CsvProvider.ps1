@@ -1,14 +1,17 @@
+<#
+	.DESCRIPTION
+	A provider to retreive data from csv files
+#>
+
 using module ..\Provider.psm1
 
 class CsvProvider : Provider {
-	[String]$Source
-	[String]$Special
-	CsvProvider([String]$Name, [String]$Source, [String]$Special) : base('CsvProvider') {
-		$this.Name = $Name
-		$this.Source =  $Source
-		$this.Special = $Special
+
+	CsvProvider([String]$Name, [String]$Source) : base('CsvProvider', $Name, $Source) {
+		#Handled by base class
 	}
 
+	#Override method GetData for CliXml 
 	[PSObject]GetData() {
 		$Data = Import-Csv -Path $this.Source
 		Return $Data

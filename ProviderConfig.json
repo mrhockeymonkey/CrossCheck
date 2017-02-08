@@ -17,13 +17,21 @@
 		"Config": [
 			{
 				"Name": "Service1",
-				"Source": "C:/Temp/Service.csv",
-				"Special": "1234"
+				"Source": "C:/Temp/Service.csv"
 			},
 			{
 				"Name": "Service2",
-				"Source": "C:/Temp/Service.csv",
-				"Special": "122334"
+				"Source": "C:/Temp/Service.csv"
+			}
+		]
+	}, 
+	{
+		"Provider": "RestProvider",
+		"Config": [
+			{
+				"Name": "JsonPlaceHolder",
+				"Source": "https://jsonplaceholder.typicode.com/users", 
+				"ContentType": "application/json"
 			}
 		]
 	}

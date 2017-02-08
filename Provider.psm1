@@ -8,17 +8,19 @@
 	retreiving datafrom external sources, caching that data for local use
 #>
 class Provider {
-	[String]$Name
 	[String]$Provider
+	[String]$Name
+	[String]$Source
 
-	Provider([String]$Provider) {
+	Provider([String]$Provider, [String]$Name, [String]$Source) {
 		#Throw if trying to instantiate this class
 		$Type = $this.GetType()
 		If ($Type -eq [Provider]){ #is
 			throw "$Type is an abstract class and must be inherited"
 		}
-
 		$this.Provider = $Provider
+		$this.Name     = $Name
+		$this.Source   = $Source
 	}
 
 	[PSObject]GetData() {
