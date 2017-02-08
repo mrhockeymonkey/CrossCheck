@@ -21,9 +21,9 @@ Function Get-DataProvider {
 	$ProviderConfig = Get-Content -Path $Path -Raw -ErrorAction Stop | ConvertFrom-Json 
 	
 	#Filter unwanted providers is user specifies name
-	#If ($PSBoundParameters.ContainsKey('Name')) {
-	#	$ProviderConfig = $ProviderConfig | Where-Object {$_.Name -like $PSBoundParameters['Name']}
-	#}
+	If ($PSBoundParameters.ContainsKey('Name')) {
+		$ProviderConfig = $ProviderConfig | Where-Object {$_.Config.Name -like $PSBoundParameters['Name']}
+	}
 
 	#Loop through config and instatiate the required provider class for each
 	$ProviderConfig | ForEach-Object {
