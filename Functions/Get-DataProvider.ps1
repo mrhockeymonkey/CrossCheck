@@ -29,14 +29,18 @@ Function Get-DataProvider {
 	$ProviderConfig | ForEach-Object {
 		$ThisProvider = $_.Provider
 
+		#A defined provider may have 1 or more configs nested underneath, so loop through
 		$_.Config | ForEach-Object {
-			$ThisConfig = $_
-			#Each Provider will have its own custom properties so we grab them here
-			#Note they MUST be in the correct order in ProviderConfig.json
-			$Arguments = $_ | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | ForEach-Object {
-				$ThisConfig.$_
-			}
-			Write-Verbose "Instantiating Provider: $($ThisObject.Provider)"
+			
+			#Get the values of each config property
+			#Note definitions must respect the correct order of arguments for this to work
+			$Arguments = $_.psobject.properties.value
+			
+			#Some Debug
+			Write-Debug "TypeName: $ThisProvider"
+			Write-Debug "Arguments: $($Arguments -join ' ,')"
+			
+			#Instantiate
 			New-Object -TypeName $ThisProvider -ArgumentList $Arguments
 		}
 	}
