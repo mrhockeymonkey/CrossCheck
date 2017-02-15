@@ -57,8 +57,7 @@ class Provider {
 	.DESCRIPTION
 	An issue is the object raised as the result of a check. 
 #>
-
-Class Issue {
+class Issue {
 	[String]$Title
 	[Priority]$Priority
 	[String]$Message
