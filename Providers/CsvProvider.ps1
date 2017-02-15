@@ -3,8 +3,6 @@
 	A provider to retreive data from csv files
 #>
 
-using module ..\Provider.psm1
-
 class CsvProvider : Provider {
 
 	CsvProvider([String]$Name, [String]$Source) : base('CsvProvider', $Name, $Source) {

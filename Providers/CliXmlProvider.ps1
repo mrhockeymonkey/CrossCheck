@@ -3,8 +3,6 @@
 	A provider to retreive data from clixml files
 #>
 
-using module ..\Provider.psm1
-
 class CliXmlProvider : Provider {
 
 	CliXmlProvider([String]$Name, [String]$Source) : base ('CliXmlProvider', $Name, $Source) {

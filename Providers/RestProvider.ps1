@@ -3,8 +3,6 @@
 	A provider to retreive data via restful api
 #>
 
-using module ..\Provider.psm1
-
 class RestProvider : Provider {
 	[String]$ContentType
 	

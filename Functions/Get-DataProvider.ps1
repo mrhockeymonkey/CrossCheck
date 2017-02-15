@@ -12,7 +12,7 @@ Function Get-DataProvider {
 	Param (
 		[String]$Name, 
 		
-		[String]$ConfigDocument = "$PSScriptRoot\..\ProviderConfig.json"
+		[String]$ConfigDocument = "$Script:ModuleRoot\ProviderConfig.json"
 	)
 
 	#Read configuration file
