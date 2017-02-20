@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css">
+	<script src="{{ url_for('static',filename='jquery-3.1.1.min.js') }}"></script>
+	<script>
+		$(document).ready(function () {
+			//Helper functions
+			function UpdateIssuesTable(req_pri) {
+				var data = {
+					priority : req_pri
+				};
+				$.getJSON('/_get_issues', data, function (data) {
+					var tabledata = ""
+					$.each(data, function () {
+						var tablerow = "<tr><td>" + this.issue + "</td><td>" + this.priority + "</td><td>" + this.count + "</td></tr>"
+						tabledata += tablerow
+						console.log("Adding Row: " + tablerow);
+					});
+					$("#issues-table tbody").html(tabledata);
+				});
+				return false;
+			};
+
+			//Actions
+			UpdateIssuesTable()
+
+			$("#overview-high").click(function () {
+				$("#issues-title").text('High Priority Issues');
+				UpdateIssuesTable('high')
+			});
+			$("#overview-medium").click(function () {
+				$("#issues-title").text('Medium Priority Issues');
+				UpdateIssuesTable('medium')
+			});
+			$("#overview-low").click(function () {
+				$("#issues-title").text('Low Priority Issues');
+				UpdateIssuesTable('low')
+			});
+			$("#overview-all").click(function () {
+				$("#issues-title").text('All Issues');
+				UpdateIssuesTable()
+			});
+		});
+	</script>
+</head>
+
+<body class='w3-light-grey'>
+	<!-- Top container -->
+	<div class="w3-container w3-top w3-black w3-large w3-padding" style="z-index:4">
+		<button class="w3-btn w3-hide-large w3-padding-0 w3-hover-text-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+		<span class="w3-right">Logo</span>
+	</div>
+
+	<!-- Sidenav/menu -->
+	<nav class="w3-sidenav w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidenav"><br>
+		<div class="w3-container w3-row">
+			<div class="w3-col s4">
+				<img src="/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
+			</div>
+			<div class="w3-col s8">
+				<span>Welcome, <strong>Mike</strong></span><br>
+				<a href="#" class="w3-hover-none w3-hover-text-red w3-show-inline-block"><i class="fa fa-envelope"></i></a>
+				<a href="#" class="w3-hover-none w3-hover-text-green w3-show-inline-block"><i class="fa fa-user"></i></a>
+				<a href="#" class="w3-hover-none w3-hover-text-blue w3-show-inline-block"><i class="fa fa-cog"></i></a>
+			</div>
+		</div>
+		<hr>
+		<div class="w3-container">
+			<h5>Dashboard</h5>
+		</div>
+		<a href="#" class="w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+		<a href="#" class="w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  Overview</a>
+		<a href="#" class="w3-padding"><i class="fa fa-eye fa-fw"></i>  Views</a>
+		<a href="#" class="w3-padding"><i class="fa fa-users fa-fw"></i>  Traffic</a>
+		<a href="#" class="w3-padding"><i class="fa fa-bullseye fa-fw"></i>  Geo</a>
+		<a href="#" class="w3-padding"><i class="fa fa-diamond fa-fw"></i>  Orders</a>
+		<a href="#" class="w3-padding"><i class="fa fa-bell fa-fw"></i>  News</a>
+		<a href="#" class="w3-padding"><i class="fa fa-bank fa-fw"></i>  General</a>
+		<a href="#" class="w3-padding"><i class="fa fa-history fa-fw"></i>  History</a>
+		<a href="#" class="w3-padding"><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
+	</nav>
+
+
+	<!-- Overlay effect when opening sidenav on small screens -->
+	<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu"
+		id="myOverlay"></div>
+
+		<!-- !PAGE CONTENT! -->
+		<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+			<!-- Overview Section -->
+			<header class="w3-container" style="padding-top:22px">
+				<h5><b>Overview</b></h5>
+			</header>
+
+			<div class="w3-row-padding w3-margin-bottom">
+				<div class="w3-quarter" id="overview-high">
+					<div class="w3-container w3-red w3-padding-16">
+						<div class="w3-left"><i class="fa fa-comment w3-xxxlarge"></i></div>
+						<div class="w3-right">
+							<h3>52</h3>
+						</div>
+						<div class="w3-clear"></div>
+						<h4>High</h4>
+					</div>
+				</div>
+				<div class="w3-quarter" id="overview-medium">
+					<div class="w3-container w3-orange w3-text-white w3-padding-16">
+						<div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
+						<div class="w3-right">
+							<h3>50</h3>
+						</div>
+						<div class="w3-clear"></div>
+						<h4>Medium</h4>
+					</div>
+				</div>
+				<div class="w3-quarter" id="overview-low">
+					<div class="w3-container w3-blue w3-padding-16">
+						<div class="w3-left"><i class="fa fa-eye w3-xxxlarge"></i></div>
+						<div class="w3-right">
+							<h3>99</h3>
+						</div>
+						<div class="w3-clear"></div>
+						<h4>Low</h4>
+					</div>
+				</div>
+				<div class="w3-quarter" id="overview-all">
+					<div class="w3-container w3-grey w3-padding-16">
+						<div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>
+						<div class="w3-right">
+							<h3>23</h3>
+						</div>
+						<div class="w3-clear"></div>
+						<h4>All</h4>
+					</div>
+				</div>
+			</div>
+
+			<!--Issues Section-->
+			<div class="w3-container" >
+				<h5 id="issues-title">All Issues</h5>
+				<table id="issues-table" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
+					<thead class="w3-black">
+						<tr>
+							<td>Issue</td>
+							<td>Priority</td>
+							<td>Count</td>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+				<br>
+			</div>
+</body>
+
+</html>
