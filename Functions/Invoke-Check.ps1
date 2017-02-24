@@ -11,6 +11,6 @@ Function Invoke-Check {
 		[Parameter(Mandatory = $true, Position = 1)]
 		[ScriptBlock]$Script
 	)
-
-	$Script.Invoke()
+	Write-Verbose "Invoking Check: $Name"
+	& $Script
 }

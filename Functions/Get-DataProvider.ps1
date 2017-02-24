@@ -12,7 +12,7 @@ Function Get-DataProvider {
 	Param (
 		[String]$Name, 
 		
-		[String]$ConfigDocument = "$Script:ModuleRoot\ProviderConfig.json"
+		[String]$ConfigDocument = "$PSScriptRoot\..\ProviderConfig.json"
 	)
 
 	#Read configuration file
@@ -39,11 +39,8 @@ Function Get-DataProvider {
 			#Note definitions must respect the correct order of arguments for this to work
 			$Arguments = $_.psobject.properties.value
 			
-			#Some Debug
-			Write-Debug "TypeName: $ThisProvider"
-			Write-Debug "Arguments: $($Arguments -join ' ,')"
-			
 			#Instantiate
+			Write-Debug "Instantiating: $ThisProvider ($($Arguments -join ', '))"
 			New-Object -TypeName $ThisProvider -ArgumentList $Arguments
 		}
 	}
