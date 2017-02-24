@@ -1,6 +1,18 @@
 <#
 	.DESCRIPTION
 	A provider to retreive data via restful api
+
+	.EXAMPLE
+	{
+		"Provider": "RestProvider",
+		"Config": [
+			{
+				"Name": "ExampleData3",
+				"Source": "https://jsonplaceholder.typicode.com/users", 
+				"ContentType": "application/json"
+			}
+		]
+	}
 #>
 
 class RestProvider : Provider {
