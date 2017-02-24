@@ -1,37 +1,19 @@
 [
 	{
-		"Provider": "CliXmlProvider",
-		"Config": [
-			{
-				"Name": "Process1",
-				"Source": "C:/Temp/Process.xml"
-			},
-			{
-				"Name": "Process2",
-				"Source": "C:/Temp/Process.xml"
-			}
-		]
-	},
-	{
 		"Provider": "CsvProvider",
 		"Config": [
 			{
-				"Name": "Service1",
-				"Source": "C:/Temp/Service.csv"
-			},
-			{
-				"Name": "Service2",
-				"Source": "C:/Temp/Service.csv"
+				"Name": "ServiceStatus",
+				"Source": "C:/Users/Scott/OneDrive/Code/CrossCheck/ExampleData1.csv"
 			}
 		]
 	}, 
 	{
-		"Provider": "RestProvider",
+		"Provider": "CliXmlProvider",
 		"Config": [
 			{
-				"Name": "JsonPlaceHolder",
-				"Source": "https://jsonplaceholder.typicode.com/users", 
-				"ContentType": "application/json"
+				"Name": "ServiceTypes",
+				"Source": "C:/Users/Scott/OneDrive/Code/CrossCheck/ExampleData2.xml"
 			}
 		]
 	}
