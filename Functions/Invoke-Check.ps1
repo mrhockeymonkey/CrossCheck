@@ -9,8 +9,15 @@ Function Invoke-Check {
 		[String]$Name,
 
 		[Parameter(Mandatory = $true, Position = 1)]
+		[ValidateSet('High','Medium','Low')]
+		[Priority]$Priority,
+
+		[Parameter(Mandatory = $true, Position = 2)]
 		[ScriptBlock]$Script
 	)
 	Write-Verbose "Invoking Check: $Name"
-	& $Script
+
+	Invoke-Command -ScriptBlock $Script | ForEach-Object {
+		Write-Issue -Title $Name -Priority $Priority -Message $_
+	}
 }

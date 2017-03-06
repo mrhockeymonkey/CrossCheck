@@ -21,8 +21,6 @@ Function Write-Issue {
 		[Priority]$Priority,
 
 		[String]$Message
-
-		#[PSObject[]]$Detail
 	)
 
 	$Issue = [Issue]::New($Title, $Priority)

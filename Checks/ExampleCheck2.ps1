@@ -8,12 +8,12 @@
 	an issues if present
 #>
 
-Check ExampleCheck2 {
+Check ExampleCheck2 High {
 	
 	$BrokenServices = Get-DataProvider -Name 'ServiceStatus' | Import-CachedData | Where-Object {$_.Status -ne 'Running'}
 	$PublicServices = Get-DataProvider -Name 'ServiceTypes' | Import-CachedData | Where-Object {$_.Type -eq 'Public'}
 
 	$PublicServices | Where-Object {$_.Service -in $BrokenServices.Service} | ForEach-Object {
-		Write-Issue -Title "Public service $($_.Service) is broken" -Priority High
+		Write-Output "Public service $($_.Service) is broken"
 	}
 }
