@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css">
+	<link rel="stylesheet" href="{{ url_for('static',filename='w3.css') }}">
 	<script src="{{ url_for('static',filename='jquery-3.1.1.min.js') }}"></script>
 	<script>
 		$(document).ready(function () {
@@ -11,10 +11,10 @@
 				var data = {
 					priority : req_pri
 				};
-				$.getJSON('/_get_issues', data, function (data) {
+				$.getJSON('/_get_issues_overview', data, function (result) {
 					var tabledata = ""
-					$.each(data, function () {
-						var tablerow = "<tr><td>" + this.issue + "</td><td>" + this.priority + "</td><td>" + this.count + "</td></tr>"
+					$.each(result, function () {
+						var tablerow = "<tr><td>" + this.Title + "</td><td>" + this.Priority + "</td><td>" + this.Count + "</td></tr>"
 						tabledata += tablerow
 						console.log("Adding Row: " + tablerow);
 					});
@@ -23,20 +23,42 @@
 				return false;
 			};
 
+			function UpdateIssuesCount() {
+				$.getJSON('/_get_issues_count', function(data) {
+					$.each(data, function(){
+						switch(this.Priority){
+							case 0:
+								$("#overview-high-value").text(this.Count);
+								break;
+							case 1:
+								$("#overview-medium-value").text(this.Count);
+								break;
+							case 2:
+								$("#overview-low-value").text(this.Count);
+								break;
+							case -1:
+								$("#overview-all-value").text(this.Count);
+								break;
+						};
+					});
+				});
+			};
+
 			//Actions
-			UpdateIssuesTable()
+			UpdateIssuesCount();
+			UpdateIssuesTable();
 
 			$("#overview-high").click(function () {
 				$("#issues-title").text('High Priority Issues');
-				UpdateIssuesTable('high')
+				UpdateIssuesTable('0')
 			});
 			$("#overview-medium").click(function () {
 				$("#issues-title").text('Medium Priority Issues');
-				UpdateIssuesTable('medium')
+				UpdateIssuesTable('1')
 			});
 			$("#overview-low").click(function () {
 				$("#issues-title").text('Low Priority Issues');
-				UpdateIssuesTable('low')
+				UpdateIssuesTable('2')
 			});
 			$("#overview-all").click(function () {
 				$("#issues-title").text('All Issues');
@@ -100,7 +122,7 @@
 					<div class="w3-container w3-red w3-padding-16">
 						<div class="w3-left"><i class="fa fa-comment w3-xxxlarge"></i></div>
 						<div class="w3-right">
-							<h3>52</h3>
+							<h3 id="overview-high-value">0</h3>
 						</div>
 						<div class="w3-clear"></div>
 						<h4>High</h4>
@@ -110,7 +132,7 @@
 					<div class="w3-container w3-orange w3-text-white w3-padding-16">
 						<div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
 						<div class="w3-right">
-							<h3>50</h3>
+							<h3 id="overview-medium-value">0</h3>
 						</div>
 						<div class="w3-clear"></div>
 						<h4>Medium</h4>
@@ -120,7 +142,7 @@
 					<div class="w3-container w3-blue w3-padding-16">
 						<div class="w3-left"><i class="fa fa-eye w3-xxxlarge"></i></div>
 						<div class="w3-right">
-							<h3>99</h3>
+							<h3 id="overview-low-value">0</h3>
 						</div>
 						<div class="w3-clear"></div>
 						<h4>Low</h4>
@@ -130,7 +152,7 @@
 					<div class="w3-container w3-grey w3-padding-16">
 						<div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>
 						<div class="w3-right">
-							<h3>23</h3>
+							<h3 id="overview-all-value">0</h3>
 						</div>
 						<div class="w3-clear"></div>
 						<h4>All</h4>
