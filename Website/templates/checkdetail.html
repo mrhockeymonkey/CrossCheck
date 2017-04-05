@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+
+{% block script %}
+<script>
+	$(document).ready(function () {
+		//Helper functions
+		function UpdateDetailsTable() {
+			var data = {
+				title : '{{ title }}'
+			};
+			$.getJSON('/_issues', data, function (result) {
+				var tabledata = ""
+				$.each(result, function () {
+					var tablerow = `<tr><td>${this.Message}</td><td>0</td></tr>`
+					tabledata += tablerow
+					//console.log("Adding Row: " + tablerow);
+				});
+				$("#details-table tbody").html(tabledata);
+			});
+			return false;
+		};
+
+		function UpdateDetailsHelp() {
+			var data = {
+				title : '{{ title }}'
+			};
+			$.getJSON('/_issuesGroupedByTitle', data, function (result) {
+				thisIssue = result[0]
+				$("#details-count").html(thisIssue.Count)
+				switch(thisIssue.Priority){
+					case 0:
+						$("#details-priority").text("High");
+						$("#details-icon").attr('class','w3-container w3-red w3-padding-16')
+						break;
+					case 1:
+						$("#details-priority").text("Medium");
+						$("#details-icon").attr('class','w3-container w3-orange w3-padding-16')
+						break;
+					case 2:
+						$("#details-priority").text("Low");
+						$("#details-icon").attr('class','w3-container w3-blue w3-padding-16')
+						break;
+				};
+			});
+		};
+
+		UpdateDetailsHelp();
+		UpdateDetailsTable();
+	});
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+	<header class="w3-container" style="padding-top:22px">
+		<h5><b>{{ title }}</b></h5>
+	</header>
+	<div class="w3-row-padding w3-margin-bottom">
+		<div class="w3-quarter">
+			<div id="details-icon" class="w3-container w3-grey w3-padding-16">
+				<div class="w3-left"><i class="fa fa-comment w3-xxxlarge"></i></div>
+				<div class="w3-right">
+					<h3 id="details-count">0</h3>
+				</div>
+				<div class="w3-clear"></div>
+				<h4 id="details-priority">High</h4>
+			</div>
+		</div>
+		<div class="w3-threequarter">
+			<div id="" class="w3-container w3-grey w3-padding-16">
+				<p>Help Text Goes Here</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="w3-container" >
+		<h5>Details</h5>
+		<table id="details-table" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
+			<thead class="w3-black">
+				<tr>
+					<td>Message</td>
+					<td>Days Old</td>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+		<br>
+	</div>
+</div>	
+{% endblock %}
