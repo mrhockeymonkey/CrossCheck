@@ -11,6 +11,13 @@ def get_data():
 	data = json.loads(json_data)
 	return data
 
+# a function to retreive help text
+def get_help():
+	data_file = open('C:\\Users\\Scott\\OneDrive\\Code\\CrossCheck\\Website\\help.json')
+	json_help = data_file.read()
+	help = json.loads(json_help)
+	return help
+
 # pages
 @app.route('/')
 def index():
@@ -41,6 +48,19 @@ def _issues():
 		return jsonify(filtered_data)
 	# note i am missing the case where both args are given. But with the current data structure
 	# this will just result in the same data returned anyway. 
+
+@app.route('/_help')
+def _help():
+	# get the help and any arguments passed
+	help = get_help()
+	check = request.args.get('check')
+
+	if check:
+		filtered_help = [elem for elem in help if elem['Check'] == check]
+		return jsonify(filtered_help)
+	else:
+		return jsonify(help)
+
 
 
 @app.route('/_issuesGroupedByTitle')

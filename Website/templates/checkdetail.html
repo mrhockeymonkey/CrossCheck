@@ -24,6 +24,7 @@
 			var data = {
 				title : '{{ title }}'
 			};
+			//First update the left square's color and label
 			$.getJSON('/_issuesGroupedByTitle', data, function (result) {
 				thisIssue = result[0]
 				$("#details-count").html(thisIssue.Count)
@@ -41,6 +42,13 @@
 						$("#details-icon").attr('class','w3-container w3-blue w3-padding-16')
 						break;
 				};
+			});
+			//Next insert the export help text if any
+			var data = {
+				check : '{{ title }}'
+			};
+			$.getJSON('/_help', data, function (result) {
+				$("#details-help").text("Blah blah blah");
 			});
 		};
 
@@ -67,8 +75,8 @@
 			</div>
 		</div>
 		<div class="w3-threequarter">
-			<div id="" class="w3-container w3-grey w3-padding-16">
-				<p>Help Text Goes Here</p>
+			<div class="w3-container w3-grey w3-padding-16">
+				<p id="details-help">Help Text Goes Here</p>
 			</div>
 		</div>
 	</div>

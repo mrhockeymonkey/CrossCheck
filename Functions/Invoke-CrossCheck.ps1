@@ -14,7 +14,7 @@ Function Invoke-CrossCheck {
 	Get-DataProvider | Update-CachedData
 
 	#Run each check in sequence and convert resulting issues to json data
-	$IssueJson = Get-ChildItem -Path $PSScriptRoot\..\Checks | ForEach-Object -Process {
+	$IssueJson = Get-ChildItem -Path $PSScriptRoot\..\Examples\Checks | ForEach-Object -Process {
 		& $_.FullName
 	} | ConvertTo-Json
 

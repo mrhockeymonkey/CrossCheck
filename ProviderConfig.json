@@ -4,7 +4,11 @@
 		"Config": [
 			{
 				"Name": "ServiceStatus",
-				"Source": "C:/Users/Scott/OneDrive/Code/CrossCheck/ExampleData1.csv"
+				"Source": "C:/Users/Scott/OneDrive/Code/CrossCheck/ExampleData/ExampleData1.csv"
+			},
+			{
+				"Name": "ServerState",
+				"Source": "C:/Users/Scott/OneDrive/Code/CrossCheck/ExampleData/ExampleData3.csv"
 			}
 		]
 	}, 
@@ -13,7 +17,11 @@
 		"Config": [
 			{
 				"Name": "ServiceTypes",
-				"Source": "C:/Users/Scott/OneDrive/Code/CrossCheck/ExampleData2.xml"
+				"Source": "C:/Users/Scott/OneDrive/Code/CrossCheck/ExampleData/ExampleData2.xml"
+			},
+			{
+				"Name": "UserCrb",
+				"Source": "C:/Users/Scott/OneDrive/Code/CrossCheck/ExampleData/ExampleData4.xml"
 			}
 		]
 	}
