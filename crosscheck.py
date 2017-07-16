@@ -1,29 +1,13 @@
 from flask import Flask, jsonify, render_template, request, make_response
 from flask_pymongo import PyMongo
-from collections import defaultdict
-
-#bson.json_util.dumps to convert BSON to JSON
-#bson.json_util.ObjectId Class for mongodb ids to used for querying
-from bson.json_util import dumps, ObjectId 
-
+from collections import defaultdict #Needed?
 import json
+from bson.json_util import dumps, ObjectId 
 
 app = Flask("crosscheck")
 mongo = PyMongo(app)
 
-# a function to retreive crosscheck stored data
-def get_data():
-	data_file = open('C:\\Users\\Scott\\OneDrive\\Code\\CrossCheck\\Website\\data.json')
-	json_data = data_file.read()
-	data = json.loads(json_data)
-	return data
 
-# a function to retreive help text
-def get_help():
-	data_file = open('C:\\Users\\Scott\\OneDrive\\Code\\CrossCheck\\Website\\help.json')
-	json_help = data_file.read()
-	help = json.loads(json_help)
-	return help
 
 # pages
 @app.route('/')
@@ -41,18 +25,15 @@ def logs():
 	return render_template('logs.html')
 
 
-# API
+# helpers
 
 #flask defaults to returning html on 404, this sets up a json response instead
 @app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
-@app.route('/_add')
-def _add():
-	user = mongo.db.user
-	user.insert({'name': 'Anthony'})
-	return 'User Added!'
+
+# api
 
 @app.route('/crosscheck/api/v1/issues', methods = ['GET'])
 def get_issues():
@@ -85,6 +66,10 @@ def create_issue():
 def delete_issue(issue_id):
 	issues = mongo.db.issues.delete_one({'_id': ObjectId(issue_id) })
 	return dumps({'result': True})
+
+
+
+
 
 @app.route('/_help')
 def _help():
@@ -139,17 +124,6 @@ def _get_issues_count():
 	return jsonify(count)
 
 
-@app.route('/_get_fake_data')
-def get_fake_data():
-	fakedata = [
-		{'issue':'Something Terrible Has Happened','priority':'high','count':4},
-		{'issue':'Omfg This is Wrong','priority':'high','count':5},
-		{'issue':'Someone has made a mistake','priority':'medium','count':8},
-		{'issue':'Small inconsistency spotted','priority':'low','count':1},
-		{'issue':'Typo found','priority':'low','count':3}
-	]
-	return jsonify(fakedata)
 
-# 
 if __name__ == '__main__':
 	app.run(debug = True, host = '0.0.0.0')
