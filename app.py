@@ -1,8 +1,15 @@
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, make_response
+from flask_pymongo import PyMongo
 from collections import defaultdict
+
+#bson.json_util.dumps to convert BSON to JSON
+#bson.json_util.ObjectId Class for mongodb ids to used for querying
+from bson.json_util import dumps, ObjectId 
+
 import json
 
-app = Flask(__name__)
+app = Flask("crosscheck")
+mongo = PyMongo(app)
 
 # a function to retreive crosscheck stored data
 def get_data():
@@ -28,26 +35,56 @@ def test():
 	title = request.args.get('title')
 	return render_template('checkdetail.html', title = title)
 
+@app.route('/logs')
+def logs():
+	print('wolrd')
+	return render_template('logs.html')
+
 
 # API
-@app.route('/_issues')
-def _issues():
-	# get the data and any arguments passed
-	data = get_data()
-	title = request.args.get('title')
-	priority = request.args.get('priority')
 
-	if not title and not priority:
-		return jsonify(data)
-	elif title:
-		filtered_data = [elem for elem in data if elem['Title'] == title]
-		return jsonify(filtered_data)
-	elif priority:
-		# here we need to convert pri to int as it was passed in as a string
-		filtered_data = [elem for elem in data if elem['Priority'] == int(priority)]
-		return jsonify(filtered_data)
-	# note i am missing the case where both args are given. But with the current data structure
-	# this will just result in the same data returned anyway. 
+#flask defaults to returning html on 404, this sets up a json response instead
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not found'}), 404)
+
+@app.route('/_add')
+def _add():
+	user = mongo.db.user
+	user.insert({'name': 'Anthony'})
+	return 'User Added!'
+
+@app.route('/crosscheck/api/v1/issues', methods = ['GET'])
+def get_issues():
+	issues = [doc for doc in mongo.db.issues.find()]
+	return dumps({'result': issues})
+
+@app.route('/crosscheck/api/v1/issues/<issue_id>', methods = ['GET'])
+def get_issue(issue_id):
+	issues = mongo.db.issues.find_one({'_id': ObjectId(issue_id) })
+	issues['_id'] = str(issues['_id'])
+	return dumps({'result': issues})
+
+@app.route('/crosscheck/api/v1/issues', methods = ['POST'])
+def create_issue():
+	if not request.json or not 'title' in request.json or not 'priority' in request.json:
+		abort(400)
+	title = request.json['title']
+	priority = request.json['priority']
+	description = request.json['description']
+	new_issue = {
+		'title': request.json['title'],
+		'priority': request.json['priority'],
+		'description': request.json['description']
+	}
+	print(new_issue)
+	mongo.db.issues.insert_one(new_issue)
+	return dumps({'result': new_issue}), 201
+
+@app.route('/crosscheck/api/v1/issues/<issue_id>', methods = ['DELETE'])
+def delete_issue(issue_id):
+	issues = mongo.db.issues.delete_one({'_id': ObjectId(issue_id) })
+	return dumps({'result': True})
 
 @app.route('/_help')
 def _help():
