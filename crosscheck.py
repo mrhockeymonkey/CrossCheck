@@ -14,10 +14,10 @@ mongo = PyMongo(app)
 def index():
 	return render_template('index.html')
 
-@app.route('/checkdetail')
+@app.route('/issue_detail')
 def test():
-	title = request.args.get('title')
-	return render_template('checkdetail.html', title = title)
+	title = request.args.get('issue_title')
+	return render_template('issue_detail.html', issue_title = issue_title)
 
 @app.route('/logs')
 def logs():
